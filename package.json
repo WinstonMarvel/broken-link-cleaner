@@ -7,10 +7,11 @@
   "license": "MIT",
   "description": "Removes broken links present in text/HTML files",
   "scripts": {
-      "start": "node app.js",
-      "start-dev": "nodemon app.js"
+    "start": "node app.js",
+    "start-dev": "nodemon app.js"
   },
   "dependencies": {
+    "abort-controller": "^2.0.2",
     "cheerio": "^1.0.0-rc.2",
     "node-fetch": "^2.1.2"
   }
