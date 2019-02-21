@@ -1,0 +1,17 @@
+{
+  "name": "broken-link-cleaner",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/WinstonMarvel/broken-link-cleaner",
+  "author": "WinstonMarvel <winston@winstonmarvel.com>",
+  "license": "MIT",
+  "description": "Removes broken links present in text/HTML files",
+  "scripts": {
+      "start": "node app.js",
+      "start-dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "node-fetch": "^2.1.2"
+  }
+}

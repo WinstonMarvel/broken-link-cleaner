@@ -1,0 +1,13 @@
+<html><head></head>
+
+<body>
+    <a href="http://www.dcba.org/mpage/v30AlexFawell" target="_blank">Valid Link</a>
+    <a href="http://www.google.com" target="_blank">Valid Link</a>
+    <a href="http://www.injuryverdicts.com/" target="_blank">Valid Link</a>
+    Broken Link
+    Broken Link
+    Broken Link
+    <img src="http://caplllclky.firmsitepreview.com/design/images/badge-elite-lawyers-of-america.jpg">
+    
+
+</body></html>

@@ -1,0 +1,15 @@
+<html>
+
+<head></head>
+
+<body>
+    <a href="http://www.dcba.org/mpage/v30AlexFawell" target="_blank">Valid Link</a>
+    <a href="http://www.google.com" target="_blank">Valid Link</a>
+    <a href="http://www.injuryverdicts.com/" target="_blank">Valid Link</a>
+    <a href="https://www.esadf123ds.com213as/asd" target="_blank">Broken Link</a>
+    <a href="https://www.injuryverdicts.com/sad" target="_blank">Broken Link</a>
+    <a href="https://www.injuryverdicts.com/s213" target="_blank">Broken Link</a>
+    <img src="http://caplllclky.firmsitepreview.com/design/images/badge-elite-lawyers-of-america.jpg">
+    <img src="http://capsdsa123lllclky.firmsitepreview.com/design/images/badge-elite-lawyers-of-america.jpg">
+</body>
+</html>
