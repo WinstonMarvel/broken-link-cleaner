@@ -1,4 +1,4 @@
-AUTHOR: Crandall Pera Law
+<html><head></head><body>AUTHOR: Crandall Pera Law
 TITLE: $5.5 million Settlement Jane Doe v. ABC Trucking Company Cleveland, Ohio
 BASENAME: 5-5-million-settlement-jane-doe-v-abc-trucking-company-cleveland-ohio
 STATUS: Publish
@@ -29174,3 +29174,4 @@ KEYWORDS:
 
 
 --------
+</body></html>

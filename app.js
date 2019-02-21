@@ -5,7 +5,7 @@ const abortController = require('abort-controller');
 
 let linkErrors = [404, 400, 408, 502];
 let currentDomain = "injuryverdicts.com";
-const $ = cheerio.load(fs.readFileSync('./input.txt', 'utf8').toString());
+const $ = cheerio.load(fs.readFileSync('./input.txt', 'utf8').toString(), { decodeEntities: false, withDomLvl1: false });
 
 var checkBroken = function(status){
 	if( linkErrors.indexOf(status) > -1){
@@ -34,7 +34,7 @@ asyncForEach($('a, img'), async function(i,elem){
 		$(elem).replaceWith(contents);
 	}
 	else{
-		const controller = new abortController();
+		const controller = new abortController(); //for Timeout. pulled off node-fetch API explanation
 		const timeout = setTimeout(
 		  () => { controller.abort() },
 		  1000,
@@ -60,7 +60,7 @@ asyncForEach($('a, img'), async function(i,elem){
 			console.log(`Error: ${err} \n Error for Link: ${$(elem).text()}`);
 			if(err.code == "ENOTFOUND" || "ECONNRESET" || "ERR_TLS_CERT_ALTNAME_INVALID" || "ETIMEDOUT" || "UNABLE_TO_VERIFY_LEAF_SIGNATURE"){ //Handle incorrect addresses
 				let contents = $(elem).text();
-				console.log("Replacing Error Link: " + link);
+				console.log("Replacing Erdearor Link: " + link);
 				console.log("Content:" + contents);
 				$(elem).replaceWith($(elem).text());
 			}
