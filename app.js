@@ -5,7 +5,7 @@ const abortController = require('abort-controller');
 
 let linkErrors = [404, 400, 408, 502];
 let currentDomain = "injuryverdicts.com";
-const $ = cheerio.load(fs.readFileSync('./input.txt', 'utf8').toString(), { decodeEntities: false, withDomLvl1: false });
+const $ = cheerio.load(fs.readFileSync('./input.txt', 'utf8').toString(), { decodeEntities: false });
 
 var checkBroken = function(status){
 	if( linkErrors.indexOf(status) > -1){
