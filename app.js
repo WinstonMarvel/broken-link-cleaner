@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
+const chalk = require('chalk');
 const fs = require('fs');
 const abortController = require('abort-controller');
 
@@ -21,23 +22,23 @@ var asyncForEach = async function(array, callback){
 	}
 };
 
-asyncForEach($('a, img'), async function(i,elem){
+asyncForEach($('a, img, video, iframe'), async function(i,elem){
 	let link = $(elem).attr('href') || $(elem).attr('src');
 	let domainMatch = new RegExp(".*" + currentDomain + ".*", "gi");
 	if( link == "/Contact.shtml" || link.match(/^mailto.*/gi) ){
 		// console.log('Contact link')
 	}
-	else if( !link.endsWith(".jpg") && !link.endsWith(".png") && (link == "" || link.match(/^tel.*/gi) || link.match(domainMatch) || link.match(/^\/.*/gi) ) ){//Empty links and tel links. Ignore all images before blind replacing
+	else if( !link.endsWith(".jpg") && !link.endsWith(".jpeg") && !link.endsWith(".svg") && !link.endsWith(".gif") && !link.endsWith(".png") && (link == "" || link.match(/^tel.*/gi) || link.match(domainMatch) || link.match(/^\/.*/gi) ) ){//Empty links and tel links. Ignore all images before blind replacing
 		let contents = $(elem).contents();
-		console.log("Blind replace:" + link);
-		console.log("Content:" + contents);
+		console.log( chalk.green("Blind replace:" + link) );
+		console.log( chalk.cyan("Content:" + contents) );
 		$(elem).replaceWith(contents);
 	}
 	else{
 		const controller = new abortController(); //for Timeout. pulled off node-fetch API explanation
 		const timeout = setTimeout(
 		  () => { controller.abort() },
-		  1000,
+		  5000,
 		);
 		let fetchOptions = {
 			method: 'GET',
@@ -47,21 +48,21 @@ asyncForEach($('a, img'), async function(i,elem){
 			}
 		}
 		try{
-			console.log("Attempting fetch:" + link);
+			console.log( "Attempting fetch:" + link );
 			var res = await fetch(encodeURI(link), fetchOptions);
 			if(checkBroken(res.status)){
 				let contents = $(elem).text();
-				console.log("Replacing Broken: " + link);
-				console.log("Content:" + contents);
+				console.log( chalk.green("Replacing Broken: " + link) );
+				console.log( chalk.green("Content:" + contents) );
 				$(elem).replaceWith($(elem).text());
 			}
 		}
 		catch(err){
-			console.log(`Error: ${err} \n Error for Link: ${$(elem).text()}`);
+			console.log( chalk.bgRed(`Error: ${err} \n Error for Link: ${$(elem).text()}`) );
 			if(err.code == "ENOTFOUND" || "ECONNRESET" || "ERR_TLS_CERT_ALTNAME_INVALID" || "ETIMEDOUT" || "UNABLE_TO_VERIFY_LEAF_SIGNATURE"){ //Handle incorrect addresses
 				let contents = $(elem).text();
-				console.log("Replacing Erdearor Link: " + link);
-				console.log("Content:" + contents);
+				console.log( chalk.yellow("Replacing Error Link: " + link) );
+				console.log( chalk.yellow("Content:" + contents) );
 				$(elem).replaceWith($(elem).text());
 			}
 		}
@@ -70,6 +71,6 @@ asyncForEach($('a, img'), async function(i,elem){
 		}
 	}
 }).then(()=>{
-	console.log("Sucessfully completed. I sometimes add html, head & body tags to the beggining/end of the output, make sure you remove if necessary.")
+	console.log( chalk.bgGreen("Sucessfully completed. I sometimes add html, head & body tags to the beggining/end of the output, make sure you remove if necessary.") )
 	fs.writeFileSync('output.txt', $.html());
 });
