@@ -5,7 +5,8 @@ const fs = require('fs');
 const abortController = require('abort-controller');
 
 let linkErrors = [404, 400, 408, 502];
-let currentDomain = "injuryverdicts.com";
+let currentDomain = "thebassettfirm.com";
+let domainMatch = new RegExp(".*" + currentDomain + ".*", "gi");
 const $ = cheerio.load(fs.readFileSync('./input.txt', 'utf8').toString(), { decodeEntities: false });
 
 var checkBroken = function(status){
@@ -24,11 +25,14 @@ var asyncForEach = async function(array, callback){
 
 asyncForEach($('a, img, video, iframe'), async function(i,elem){
 	let link = $(elem).attr('href') || $(elem).attr('src');
-	let domainMatch = new RegExp(".*" + currentDomain + ".*", "gi");
-	if( link == "/Contact.shtml" || link.match(/^mailto.*/gi) ){
-		// console.log('Contact link')
+	if(!link){
+		let contents = $(elem).contents();
+		$(elem).replaceWith(contents);
 	}
-	else if( !link.endsWith(".jpg") && !link.endsWith(".jpeg") && !link.endsWith(".svg") && !link.endsWith(".gif") && !link.endsWith(".png") && (link == "" || link.match(/^tel.*/gi) || link.match(domainMatch) || link.match(/^\/.*/gi) ) ){//Empty links and tel links. Ignore all images before blind replacing
+	else if( link.startsWith("/") ||  link == "/Contact.shtml" || link.match(/^mailto.*/gi) ){
+		// Ignore
+	}
+	else if( !link.endsWith(".jpg") && !link.endsWith(".pdf") && !link.endsWith(".jpeg") && !link.endsWith(".svg") && !link.endsWith(".gif") && !link.endsWith(".png") && (link == "" || link.match(/^tel.*/gi) /*|| link.match(domainMatch)*/ || link.match(/^\/.*/gi) ) ){//Empty links and tel links. Ignore all images before blind replacing
 		let contents = $(elem).contents();
 		console.log( chalk.green("Blind replace:" + link) );
 		console.log( chalk.cyan("Content:" + contents) );
